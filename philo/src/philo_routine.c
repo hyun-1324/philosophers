@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:18:45 by donheo            #+#    #+#             */
-/*   Updated: 2025/05/31 16:34:29 by donheo           ###   ########.fr       */
+/*   Updated: 2025/05/31 21:39:32 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ static void	take_forks(t_philo *philo)
 
 static void	eat(t_philo *philo)
 {
-	print_state(philo, "is eating");
 	pthread_mutex_lock(&philo->meal_mutex);
 	philo->last_meal_time = get_current_time();
-	pthread_mutex_unlock(&philo->meal_mutex);
 	philo->meals_eaten++;
+	pthread_mutex_unlock(&philo->meal_mutex);
+	print_state(philo, "is eating");
 	usleep(philo->arg->time_to_eat * 1000);
 }
 
@@ -47,6 +47,8 @@ void	*philo_routine(void *ptr)
 	t_philo	*philo;
 
 	philo = (t_philo *)ptr;
+	if (handle_single_philo(philo))
+		return (NULL);
 	if (philo->id % 2 == 0)
 		usleep(200);
 	while (1)

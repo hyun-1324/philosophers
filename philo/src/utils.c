@@ -6,13 +6,13 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:06:31 by donheo            #+#    #+#             */
-/*   Updated: 2025/05/31 16:49:01 by donheo           ###   ########.fr       */
+/*   Updated: 2025/05/31 23:09:57 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	print_err_and_exit(char *error_message)
+void	exit_with_error(char *error_message)
 {
 	printf("%s\n", error_message);
 	exit(EXIT_FAILURE);
@@ -63,47 +63,47 @@ void	is_str_valid_number(int argc, char **argv)
 	{
 		j = 0;
 		if (argv[i][j] == '\0')
-			print_err_and_exit("invalid argument");
+			exit_with_error("invalid argument");
 		if (argv[i][j] == '+')
 		{
 			j++;
 			if (argv[i][j] == '\0')
-				print_err_and_exit("invalid argument");
+				exit_with_error("invalid argument");
 		}
 		while (argv[i][j])
 		{
 			if (argv[i][j] < '0' || argv[i][j] > '9')
-				print_err_and_exit("invalid argument");
+				exit_with_error("invalid argument");
 			j++;
 		}
 		i++;
 	}
 }
 
-void	check_overflow_and_save_arg(t_arg *arg, int argc, char **argv, long tmp)
+void	check_overflow_and_save_arg(t_args *args, int argc, char **argv, long tmp)
 {
 	tmp = ft_atoi(argv[1]);
 	if (tmp <= 0 || tmp > INT_MAX)
-		print_err_and_exit("invalid number_of_philos");
-	arg->number_of_philos = (int)tmp;
+		exit_with_error("invalid number_of_philos");
+	args->number_of_philos = (int)tmp;
 	tmp = ft_atoi(argv[2]);
 	if (tmp <= 0 || tmp > INT_MAX)
-		print_err_and_exit("invalid time_to_die");
-	arg->time_to_die = (int)tmp;
+		exit_with_error("invalid time_to_die");
+	args->time_to_die = (int)tmp;
 	tmp = ft_atoi(argv[3]);
 	if (tmp <= 0 || tmp > INT_MAX)
-		print_err_and_exit("invalid time_to_eat");
-	arg->time_to_eat = (int)tmp;
+		exit_with_error("invalid time_to_eat");
+	args->time_to_eat = (int)tmp;
 	tmp = ft_atoi(argv[4]);
 	if (tmp <= 0 || tmp > INT_MAX)
-		print_err_and_exit("invalid time_to_sleep");
-	arg->time_to_sleep = (int)tmp;
-	arg->number_must_eat = -1;
+		exit_with_error("invalid time_to_sleep");
+	args->time_to_sleep = (int)tmp;
+	args->number_must_eat = -1;
 	if (argc == 6)
 	{
 		tmp = ft_atoi(argv[5]);
 		if (tmp <= 0 || tmp > INT_MAX)
-			print_err_and_exit("invalid number_must_eat");
-		arg->number_must_eat = (int)tmp;
+			exit_with_error("invalid number_must_eat");
+		args->number_must_eat = (int)tmp;
 	}
 }

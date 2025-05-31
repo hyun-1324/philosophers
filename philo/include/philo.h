@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 10:37:29 by donheo            #+#    #+#             */
-/*   Updated: 2025/05/31 21:04:48 by donheo           ###   ########.fr       */
+/*   Updated: 2025/05/31 23:10:05 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <unistd.h>
 
 // Shared configuration and simulation state
-typedef struct s_arg
+typedef struct s_args
 {
 	int				number_of_philos;
 	int				time_to_die;
@@ -35,7 +35,7 @@ typedef struct s_arg
 	pthread_mutex_t	simulation_mutex;
 	int				simulation_finished;
 
-}	t_arg;
+}	t_args;
 
 // Philosopher-specific data
 typedef struct s_philo
@@ -46,7 +46,7 @@ typedef struct s_philo
 	pthread_t		thread;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-	t_arg			*arg;
+	t_args			*args;
 	pthread_mutex_t	meal_mutex;
 }	t_philo;
 
@@ -61,22 +61,22 @@ void	*philo_routine(void *ptr);
 int		get_current_time(void);
 long	ft_atoi(const char *str);
 void	is_str_valid_number(int argc, char **argv);
-void	check_overflow_and_save_arg(t_arg *arg, \
+void	check_overflow_and_save_arg(t_args *arg, \
 	int argc, char **argv, long tmp);
-int		finish_if_all_eaten(t_philo *philos, t_arg *arg);
+int		finish_if_all_eaten(t_philo *philos, t_args *arg);
 int		handle_single_philo(t_philo *philo);
 
 // ─────────────────────────────────────────────────────────────
 // Output & Error handling
 // ─────────────────────────────────────────────────────────────
 void	print_state(t_philo *philo, const char *state);
-void	print_err_and_exit(char *error_message);
+void	exit_with_error(char *error_message);
 
 // ─────────────────────────────────────────────────────────────
 // Cleanup & Resource management
 // ─────────────────────────────────────────────────────────────
-void	cleanup_on_create_failure(t_arg *arg, \
+void	cleanup_on_create_failure(t_args *arg, \
 	t_philo *philo, int created_threads);
-void	cleanup_resources(t_arg *arg, t_philo *philo);
+void	cleanup_resources(t_args *arg, t_philo *philo);
 
 #endif

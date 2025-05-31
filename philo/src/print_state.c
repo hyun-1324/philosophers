@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 12:09:26 by donheo            #+#    #+#             */
-/*   Updated: 2025/05/31 20:39:53 by donheo           ###   ########.fr       */
+/*   Updated: 2025/05/31 23:04:43 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ void	print_state(t_philo *philo, const char *state)
 	int		timestamp;
 
 	pos = 0;
-	pthread_mutex_lock(&philo->arg->simulation_mutex);
-	if (!philo->arg->simulation_finished || ft_strncmp(state, "died", 4) == 0)
+	pthread_mutex_lock(&philo->args->simulation_mutex);
+	if (!philo->args->simulation_finished || ft_strncmp(state, "died", 4) == 0)
 	{
-		pthread_mutex_unlock(&philo->arg->simulation_mutex);
-		pthread_mutex_lock(&philo->arg->print_mutex);
-		timestamp = get_current_time() - philo->arg->start_time;
+		pthread_mutex_unlock(&philo->args->simulation_mutex);
+		pthread_mutex_lock(&philo->args->print_mutex);
+		timestamp = get_current_time() - philo->args->start_time;
 		pos += ft_itoa(timestamp, buffer + pos);
 		buffer[pos++] = ' ';
 		pos += ft_itoa(philo->id, buffer + pos);
@@ -75,8 +75,8 @@ void	print_state(t_philo *philo, const char *state)
 			buffer[pos++] = state[len++];
 		buffer[pos++] = '\n';
 		write(STDOUT_FILENO, buffer, pos);
-		pthread_mutex_unlock(&philo->arg->print_mutex);
+		pthread_mutex_unlock(&philo->args->print_mutex);
 	}
 	else
-		pthread_mutex_unlock(&philo->arg->simulation_mutex);
+		pthread_mutex_unlock(&philo->args->simulation_mutex);
 }

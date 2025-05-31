@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:18:45 by donheo            #+#    #+#             */
-/*   Updated: 2025/05/31 21:39:32 by donheo           ###   ########.fr       */
+/*   Updated: 2025/05/31 23:04:25 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	eat(t_philo *philo)
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->meal_mutex);
 	print_state(philo, "is eating");
-	usleep(philo->arg->time_to_eat * 1000);
+	usleep(philo->args->time_to_eat * 1000);
 }
 
 static void	put_forks(t_philo *philo)
@@ -39,7 +39,7 @@ static void	put_forks(t_philo *philo)
 static void	sleep_philo(t_philo *philo)
 {
 	print_state(philo, "is sleeping");
-	usleep(philo->arg->time_to_sleep * 1000);
+	usleep(philo->args->time_to_sleep * 1000);
 }
 
 void	*philo_routine(void *ptr)
@@ -53,13 +53,13 @@ void	*philo_routine(void *ptr)
 		usleep(200);
 	while (1)
 	{
-		pthread_mutex_lock(&philo->arg->simulation_mutex);
-		if (philo->arg->simulation_finished)
+		pthread_mutex_lock(&philo->args->simulation_mutex);
+		if (philo->args->simulation_finished)
 		{
-			pthread_mutex_unlock(&philo->arg->simulation_mutex);
+			pthread_mutex_unlock(&philo->args->simulation_mutex);
 			break ;
 		}
-		pthread_mutex_unlock(&philo->arg->simulation_mutex);
+		pthread_mutex_unlock(&philo->args->simulation_mutex);
 		print_state(philo, "is thinking");
 		take_forks(philo);
 		eat(philo);

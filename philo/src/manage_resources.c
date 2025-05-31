@@ -6,13 +6,13 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:15:32 by donheo            #+#    #+#             */
-/*   Updated: 2025/05/31 16:40:25 by donheo           ###   ########.fr       */
+/*   Updated: 2025/05/31 23:03:39 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	cleanup_on_create_failure(t_arg *arg, t_philo *philo, \
+void	cleanup_on_create_failure(t_args *args, t_philo *philo, \
 	int created_threads)
 {
 	int	i;
@@ -21,31 +21,31 @@ void	cleanup_on_create_failure(t_arg *arg, t_philo *philo, \
 	while (i < created_threads)
 		pthread_join(philo[i++].thread, NULL);
 	i = 0;
-	while (i < arg->number_of_philos)
+	while (i < args->number_of_philos)
 	{
-		pthread_mutex_destroy(&arg->forks[i]);
+		pthread_mutex_destroy(&args->forks[i]);
 		pthread_mutex_destroy(&philo[i].meal_mutex);
 		i++;
 	}
-	pthread_mutex_destroy(&arg->print_mutex);
-	pthread_mutex_destroy(&arg->simulation_mutex);
-	free(arg->forks);
+	pthread_mutex_destroy(&args->print_mutex);
+	pthread_mutex_destroy(&args->simulation_mutex);
+	free(args->forks);
 	free(philo);
 }
 
-void	cleanup_resources(t_arg *arg, t_philo *philo)
+void	cleanup_resources(t_args *args, t_philo *philo)
 {
 	int	i;
 
 	i = 0;
-	while (i < arg->number_of_philos)
+	while (i < args->number_of_philos)
 	{
-		pthread_mutex_destroy(&arg->forks[i]);
+		pthread_mutex_destroy(&args->forks[i]);
 		pthread_mutex_destroy(&philo[i].meal_mutex);
 		i++;
 	}
-	pthread_mutex_destroy(&arg->print_mutex);
-	pthread_mutex_destroy(&arg->simulation_mutex);
-	free(arg->forks);
+	pthread_mutex_destroy(&args->print_mutex);
+	pthread_mutex_destroy(&args->simulation_mutex);
+	free(args->forks);
 	free(philo);
 }

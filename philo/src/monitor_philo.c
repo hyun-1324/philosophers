@@ -1,42 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   monitor_routine.c                                  :+:      :+:    :+:   */
+/*   monitor_philo.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:23:24 by donheo            #+#    #+#             */
-/*   Updated: 2025/05/31 11:59:34 by donheo           ###   ########.fr       */
+/*   Updated: 2025/05/31 16:41:11 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	*monitor_routine(void *arg)
+int	finish_if_all_eaten(t_philo *philos, t_arg *arg)
 {
-	t_philo	*philos;
-	t_arg	*arg_struct;
-	int		i;
+	int	i;
 
-	philos = (t_philo *)arg;
-	arg_struct = philos[0].arg;
-	while (!arg_struct->simulation_finished)
+	i = 0;
+	while (i < arg->number_of_philos)
 	{
-		i = 0;
-		while (i < arg_struct->number_of_philos)
+		pthread_mutex_lock(&philos[i].meal_mutex);
+		if (philos[i].meals_eaten < arg->number_must_eat)
 		{
-			pthread_mutex_lock(&philos[i].meal_mutex);
-			if (get_current_time() - philos[i].last_meal_time > arg_struct->time_to_die)
-			{
-				print_state(&philos[i], "died");
-				arg_struct->simulation_finished = 1;
-				pthread_mutex_unlock(&philos[i].meal_mutex);
-				return (NULL);
-			}
-			pthread_mutex_unlock(&philos[i].meal_mutex);\
-			i++;
+			pthread_mutex_unlock(&philos[i].meal_mutex);
+			return (0);
 		}
-		usleep(1000);
+		pthread_mutex_unlock(&philos[i].meal_mutex);
+		i++;
 	}
-	return (NULL);
+	pthread_mutex_lock(&arg->simulation_mutex);
+	arg->simulation_finished = 1;
+	pthread_mutex_unlock(&arg->simulation_mutex);
+	return (1);
 }

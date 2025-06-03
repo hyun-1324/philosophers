@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:06:28 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/03 15:12:37 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/03 17:10:47 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,8 @@ static void	monitor_philo(t_philo *philo, t_args *args)
 		}
 		if (args->number_must_eat > 0 && finish_if_all_eaten(philo, args))
 			return ;
-		usleep(500);
+		usleep(10);
 	}
-	usleep(1000);
 }
 
 int	main(int argc, char **argv)

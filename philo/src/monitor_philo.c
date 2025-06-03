@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:23:24 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/03 10:30:54 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/03 10:37:52 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	finish_if_all_eaten(t_philo *philos, t_args *args)
 
 int	handle_single_philo(t_philo *philo)
 {
-	while (1)
+	while (philo->args->number_of_philos == 1)
 	{
 		pthread_mutex_lock(&philo->args->simulation_mutex);
 		if (philo->args->simulation_finished)

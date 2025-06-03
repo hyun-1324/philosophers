@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:23:24 by donheo            #+#    #+#             */
-/*   Updated: 2025/05/31 23:04:04 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/03 10:30:54 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,20 @@ int	finish_if_all_eaten(t_philo *philos, t_args *args)
 
 int	handle_single_philo(t_philo *philo)
 {
-	if (philo->args->number_of_philos == 1)
+	while (1)
 	{
+		pthread_mutex_lock(&philo->args->simulation_mutex);
+		if (philo->args->simulation_finished)
+		{
+			pthread_mutex_unlock(&philo->args->simulation_mutex);
+			break ;
+		}
+		pthread_mutex_unlock(&philo->args->simulation_mutex);
 		print_state(philo, "is thinking");
 		pthread_mutex_lock(philo->left_fork);
 		print_state(philo, "has taken a fork");
 		usleep(philo->args->time_to_die * 1000);
+		pthread_mutex_unlock(philo->left_fork);
 		return (1);
 	}
 	return (0);

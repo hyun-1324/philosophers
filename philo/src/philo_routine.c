@@ -6,13 +6,13 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:18:45 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/03 15:25:45 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/03 19:49:36 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	take_forks(t_philo *philo, int	philo_id)
+static void	take_forks(t_philo *philo, int philo_id)
 {
 	if (philo->args->number_of_philos != philo_id)
 	{

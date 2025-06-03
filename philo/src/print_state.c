@@ -6,25 +6,11 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 12:09:26 by donheo            #+#    #+#             */
-/*   Updated: 2025/05/31 23:04:43 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/03 19:50:26 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-static int	ft_strncmp(const char *s1, const char *s2, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < n)
-	{
-		if (s1[i] != s2[i] || s1[i] == '\0' || s2[i] == '\0')
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
-	}
-	return (0);
-}
 
 static int	ft_itoa(int n, char *buf)
 {
@@ -52,6 +38,13 @@ static int	ft_itoa(int n, char *buf)
 	return (len);
 }
 
+void	print_dead_philo(t_args *args)
+{
+	usleep(1000);
+	printf("%d %d %s\n", get_current_time() \
+	- args->start_time, args->dead_philo, "dead");
+}
+
 void	print_state(t_philo *philo, const char *state)
 {
 	char	buffer[50];
@@ -61,7 +54,7 @@ void	print_state(t_philo *philo, const char *state)
 
 	pos = 0;
 	pthread_mutex_lock(&philo->args->simulation_mutex);
-	if (!philo->args->simulation_finished || ft_strncmp(state, "died", 4) == 0)
+	if (!philo->args->simulation_finished)
 	{
 		pthread_mutex_unlock(&philo->args->simulation_mutex);
 		pthread_mutex_lock(&philo->args->print_mutex);

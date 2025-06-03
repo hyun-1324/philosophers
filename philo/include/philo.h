@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 10:37:29 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/03 14:46:51 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/03 19:48:15 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_args
 	int				time_to_sleep;
 	int				number_must_eat;
 	int				start_time;
+	int				dead_philo;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	simulation_mutex;
@@ -70,6 +71,7 @@ void	*handle_single_philo(void *ptr);
 // Output & Error handling
 // ─────────────────────────────────────────────────────────────
 void	print_state(t_philo *philo, const char *state);
+void	print_dead_philo(t_args *args);
 void	exit_with_error(char *error_message);
 
 // ─────────────────────────────────────────────────────────────

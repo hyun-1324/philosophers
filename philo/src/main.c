@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:06:28 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/03 17:10:47 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/03 20:02:19 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,8 @@ static void	init_philo(t_philo **philo, t_args *args)
 	}
 }
 
-static void	start_philo(t_args *args, t_philo *philo)
+static void	start_philo(t_args *args, t_philo *philo, int i)
 {
-	int	i;
-
 	args->start_time = get_current_time();
 	i = 0;
 	if (args->number_of_philos == 1)
@@ -72,13 +70,13 @@ static void	start_philo(t_args *args, t_philo *philo)
 	{
 		while (i < args->number_of_philos)
 		{
-		if ((pthread_create(&philo[i].thread, NULL, \
-			philo_routine, &philo[i])) != 0)
-		{
-			cleanup_on_create_failure(args, philo, i);
-			exit_with_error("failed to create philo thread");
-		}
-		i++;
+			if ((pthread_create(&philo[i].thread, NULL, \
+				philo_routine, &philo[i])) != 0)
+			{
+				cleanup_on_create_failure(args, philo, i);
+				exit_with_error("failed to create philo thread");
+			}
+			i++;
 		}
 	}
 }
@@ -93,13 +91,14 @@ static void	monitor_philo(t_philo *philo, t_args *args)
 		while (i < args->number_of_philos)
 		{
 			pthread_mutex_lock(&philo[i].meal_mutex);
-			if (get_current_time() - philo[i].last_meal_time > args->time_to_die)
+			if (get_current_time() - philo[i].last_meal_time \
+			> args->time_to_die)
 			{
 				pthread_mutex_unlock(&philo[i].meal_mutex);
 				pthread_mutex_lock(&args->simulation_mutex);
 				args->simulation_finished = 1;
 				pthread_mutex_unlock(&args->simulation_mutex);
-				print_state(&philo[i], "died");
+				args->dead_philo = philo[i].id;
 				return ;
 			}
 			pthread_mutex_unlock(&philo[i++].meal_mutex);
@@ -121,8 +120,9 @@ int	main(int argc, char **argv)
 	memset(&args, 0, sizeof(t_args));
 	init_args(&args, argc, argv);
 	init_philo(&philo, &args);
-	start_philo(&args, philo);
+	start_philo(&args, philo, 0);
 	monitor_philo(philo, &args);
+	print_dead_philo(&args);
 	i = 0;
 	while (i < args.number_of_philos)
 		pthread_join(philo[i++].thread, NULL);

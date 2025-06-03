@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:06:31 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/03 15:03:16 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/03 19:49:52 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ void	is_str_valid_number(int argc, char **argv)
 	}
 }
 
-void	check_overflow_and_save_arg(t_args *args, int argc, char **argv, long tmp)
+void	check_overflow_and_save_arg(t_args *args, \
+	int argc, char **argv, long tmp)
 {
 	tmp = ft_atoi(argv[1]);
 	if (tmp <= 0 || tmp > INT_MAX)

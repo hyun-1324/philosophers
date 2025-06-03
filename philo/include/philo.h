@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 10:37:29 by donheo            #+#    #+#             */
-/*   Updated: 2025/05/31 23:10:05 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/03 14:46:51 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	is_str_valid_number(int argc, char **argv);
 void	check_overflow_and_save_arg(t_args *arg, \
 	int argc, char **argv, long tmp);
 int		finish_if_all_eaten(t_philo *philos, t_args *arg);
-int		handle_single_philo(t_philo *philo);
+void	*handle_single_philo(void *ptr);
 
 // ─────────────────────────────────────────────────────────────
 // Output & Error handling

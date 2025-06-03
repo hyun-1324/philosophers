@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:23:24 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/03 10:37:52 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/03 14:46:40 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,15 @@ int	finish_if_all_eaten(t_philo *philos, t_args *args)
 	return (1);
 }
 
-int	handle_single_philo(t_philo *philo)
+void	*handle_single_philo(void *ptr)
 {
-	while (philo->args->number_of_philos == 1)
-	{
-		pthread_mutex_lock(&philo->args->simulation_mutex);
-		if (philo->args->simulation_finished)
-		{
-			pthread_mutex_unlock(&philo->args->simulation_mutex);
-			break ;
-		}
-		pthread_mutex_unlock(&philo->args->simulation_mutex);
-		print_state(philo, "is thinking");
-		pthread_mutex_lock(philo->left_fork);
-		print_state(philo, "has taken a fork");
-		usleep(philo->args->time_to_die * 1000);
-		pthread_mutex_unlock(philo->left_fork);
-		return (1);
-	}
-	return (0);
+	t_philo	*philo;
+
+	philo = (t_philo *)ptr;
+	print_state(philo, "is thinking");
+	pthread_mutex_lock(philo->left_fork);
+	print_state(philo, "has taken a fork");
+	usleep(philo->args->time_to_die * 1000);
+	pthread_mutex_unlock(philo->left_fork);
+	return (NULL);
 }

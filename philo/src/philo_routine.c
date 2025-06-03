@@ -6,18 +6,28 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:18:45 by donheo            #+#    #+#             */
-/*   Updated: 2025/05/31 23:04:25 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/03 15:25:45 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	take_forks(t_philo *philo)
+static void	take_forks(t_philo *philo, int	philo_id)
 {
-	pthread_mutex_lock(philo->left_fork);
-	print_state(philo, "has taken a fork");
-	pthread_mutex_lock(philo->right_fork);
-	print_state(philo, "has taken a fork");
+	if (philo->args->number_of_philos != philo_id)
+	{
+		pthread_mutex_lock(philo->left_fork);
+		print_state(philo, "has taken a fork");
+		pthread_mutex_lock(philo->right_fork);
+		print_state(philo, "has taken a fork");
+	}
+	else
+	{
+		pthread_mutex_lock(philo->right_fork);
+		print_state(philo, "has taken a fork");
+		pthread_mutex_lock(philo->left_fork);
+		print_state(philo, "has taken a fork");
+	}
 }
 
 static void	eat(t_philo *philo)
@@ -47,12 +57,15 @@ void	*philo_routine(void *ptr)
 	t_philo	*philo;
 
 	philo = (t_philo *)ptr;
-	if (handle_single_philo(philo))
-		return (NULL);
 	if (philo->id % 2 == 0)
 		usleep(200);
 	while (1)
 	{
+		print_state(philo, "is thinking");
+		take_forks(philo, philo->id);
+		eat(philo);
+		put_forks(philo);
+		sleep_philo(philo);
 		pthread_mutex_lock(&philo->args->simulation_mutex);
 		if (philo->args->simulation_finished)
 		{
@@ -60,11 +73,6 @@ void	*philo_routine(void *ptr)
 			break ;
 		}
 		pthread_mutex_unlock(&philo->args->simulation_mutex);
-		print_state(philo, "is thinking");
-		take_forks(philo);
-		eat(philo);
-		put_forks(philo);
-		sleep_philo(philo);
 	}
 	return (NULL);
 }

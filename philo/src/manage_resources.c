@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:15:32 by donheo            #+#    #+#             */
-/*   Updated: 2025/05/31 23:03:39 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/03 10:08:26 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@ void	cleanup_on_create_failure(t_args *args, t_philo *philo, \
 	int	i;
 
 	i = 0;
+	pthread_mutex_lock(&philo->args->simulation_mutex);
+	args->simulation_finished = 1;
+	pthread_mutex_unlock(&philo->args->simulation_mutex);
 	while (i < created_threads)
 		pthread_join(philo[i++].thread, NULL);
 	i = 0;

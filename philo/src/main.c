@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:06:28 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/03 20:02:19 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/04 10:42:49 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	start_philo(t_args *args, t_philo *philo, int i)
 	if (args->number_of_philos == 1)
 	{
 		if ((pthread_create(&philo[i].thread, NULL, \
-			handle_single_philo, &philo[i])) != 0)
+handle_single_philo, &philo[i])) != 0)
 		{
 			cleanup_on_create_failure(args, philo, i);
 			exit_with_error("failed to create philo thread");
@@ -70,8 +70,8 @@ static void	start_philo(t_args *args, t_philo *philo, int i)
 	{
 		while (i < args->number_of_philos)
 		{
-			if ((pthread_create(&philo[i].thread, NULL, \
-				philo_routine, &philo[i])) != 0)
+			if ((pthread_create(&philo[i].thread, NULL\
+, philo_routine, &philo[i])) != 0)
 			{
 				cleanup_on_create_failure(args, philo, i);
 				exit_with_error("failed to create philo thread");
@@ -92,7 +92,7 @@ static void	monitor_philo(t_philo *philo, t_args *args)
 		{
 			pthread_mutex_lock(&philo[i].meal_mutex);
 			if (get_current_time() - philo[i].last_meal_time \
-			> args->time_to_die)
+> args->time_to_die)
 			{
 				pthread_mutex_unlock(&philo[i].meal_mutex);
 				pthread_mutex_lock(&args->simulation_mutex);

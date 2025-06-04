@@ -6,13 +6,13 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:15:32 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/03 10:08:26 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/04 10:38:24 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	cleanup_on_create_failure(t_args *args, t_philo *philo, \
+void	cleanup_on_create_failure(t_args *args, t_philo *philo,\
 	int created_threads)
 {
 	int	i;

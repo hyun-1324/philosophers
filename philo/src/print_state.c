@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 12:09:26 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/03 19:50:26 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/04 10:41:49 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ static int	ft_itoa(int n, char *buf)
 void	print_dead_philo(t_args *args)
 {
 	usleep(1000);
-	printf("%d %d %s\n", get_current_time() \
-	- args->start_time, args->dead_philo, "dead");
+	printf("%d %d %s\n"\
+, get_current_time() - args->start_time, args->dead_philo, "dead");
 }
 
 void	print_state(t_philo *philo, const char *state)

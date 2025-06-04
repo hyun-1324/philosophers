@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 10:37:29 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/03 19:48:15 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/04 10:33:47 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	*philo_routine(void *ptr);
 int		get_current_time(void);
 long	ft_atoi(const char *str);
 void	is_str_valid_number(int argc, char **argv);
-void	check_overflow_and_save_arg(t_args *arg, \
+void	check_overflow_and_save_arg(t_args *arg,\
 	int argc, char **argv, long tmp);
 int		finish_if_all_eaten(t_philo *philos, t_args *arg);
 void	*handle_single_philo(void *ptr);
@@ -77,7 +77,7 @@ void	exit_with_error(char *error_message);
 // ─────────────────────────────────────────────────────────────
 // Cleanup & Resource management
 // ─────────────────────────────────────────────────────────────
-void	cleanup_on_create_failure(t_args *arg, \
+void	cleanup_on_create_failure(t_args *arg,\
 	t_philo *philo, int created_threads);
 void	cleanup_resources(t_args *arg, t_philo *philo);
 

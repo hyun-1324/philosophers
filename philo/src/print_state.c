@@ -53,7 +53,6 @@ void	print_state(t_philo *philo, const char *state)
 	int		timestamp;
 
 	pos = 0;
-	usleep(100);
 	pthread_mutex_lock(&philo->args->simulation_mutex);
 	if (!philo->args->simulation_finished)
 	{

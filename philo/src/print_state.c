@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 12:09:26 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/04 10:41:49 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/04 11:28:44 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	print_state(t_philo *philo, const char *state)
 	int		timestamp;
 
 	pos = 0;
+	usleep(100);
 	pthread_mutex_lock(&philo->args->simulation_mutex);
 	if (!philo->args->simulation_finished)
 	{

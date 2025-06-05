@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:06:31 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/04 10:40:06 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/06 00:16:07 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ void	exit_with_error(char *error_message)
 	exit(EXIT_FAILURE);
 }
 
-int	get_current_time(void)
+long	get_current_time(void)
 {
 	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	return ((int)(tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	return (tv.tv_sec * 1000L + tv.tv_usec / 1000);
 }
 
 long	ft_atoi(const char *str)
@@ -80,13 +80,13 @@ void	is_str_valid_number(int argc, char **argv)
 	}
 }
 
-void	check_overflow_and_save_arg(t_args *args, int argc\
-	, char **argv, long tmp)
+void	check_overflow_and_save_arg(t_args *args, \
+int argc, char **argv, long tmp)
 {
 	tmp = ft_atoi(argv[1]);
 	if (tmp <= 0 || tmp > INT_MAX)
 		exit_with_error("invalid number_of_philos");
-	args->number_of_philos = (int)tmp;
+	args->num_of_philo = (int)tmp;
 	tmp = ft_atoi(argv[2]);
 	if (tmp <= 0 || tmp > INT_MAX)
 		exit_with_error("invalid time_to_die");

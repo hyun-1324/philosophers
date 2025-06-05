@@ -6,28 +6,41 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:23:29 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/05 16:52:16 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/06 00:05:50 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	take_forks(t_philo *philo, int philo_id)
+void	sleep_time(t_args *args, long sleep_time)
 {
-	if (philo->args->number_of_philos != philo_id)
+	long	current_time;
+	long	time_to_wait;
+	long	sleep_chunk;
+
+	current_time = get_current_time();
+	while (current_time < sleep_time)
 	{
-		pthread_mutex_lock(philo->left_fork);
-		print_state(philo, "has taken a fork");
-		pthread_mutex_lock(philo->right_fork);
-		print_state(philo, "has taken a fork");
+		if (args->simulation_finished)
+			break ;
+		time_to_wait = (sleep_time - current_time) * 1000;
+		if (time_to_wait <= 0)
+			break ;
+		if (time_to_wait > 250)
+			sleep_chunk = 250;
+		else
+			sleep_chunk = time_to_wait;
+		usleep(sleep_chunk);
+		current_time = get_current_time();
 	}
-	else
-	{
-		pthread_mutex_lock(philo->right_fork);
-		print_state(philo, "has taken a fork");
-		pthread_mutex_lock(philo->left_fork);
-		print_state(philo, "has taken a fork");
-	}
+}
+
+void	take_forks(t_philo *philo)
+{
+	pthread_mutex_lock(philo->left_fork);
+	print_state(philo, "has taken a fork");
+	pthread_mutex_lock(philo->right_fork);
+	print_state(philo, "has taken a fork");
 }
 
 void	eat(t_philo *philo)
@@ -37,7 +50,7 @@ void	eat(t_philo *philo)
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->meal_mutex);
 	print_state(philo, "is eating");
-	usleep(philo->args->time_to_eat * 1000);
+	sleep_time(philo->args, get_current_time() + philo->args->time_to_eat);
 }
 
 void	put_forks(t_philo *philo)
@@ -49,5 +62,5 @@ void	put_forks(t_philo *philo)
 void	sleep_philo(t_philo *philo)
 {
 	print_state(philo, "is sleeping");
-	usleep(philo->args->time_to_sleep * 1000);
+	sleep_time(philo->args, get_current_time() + philo->args->time_to_sleep);
 }

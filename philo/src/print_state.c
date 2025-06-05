@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 12:09:26 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/05 11:52:19 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/05 23:39:44 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,14 @@ static int	ft_itoa(int n, char *buf)
 	return (len);
 }
 
-void	print_dead_philo(t_args *args)
+void	print_died_philo(t_args *args)
 {
+	long	timestamp;
+
 	usleep(1000);
+	timestamp = get_current_time() - args->start_time;
 	if (!args->all_eaten)
-		printf("%d %d %s\n"\
-, get_current_time() - args->start_time, args->dead_philo, "died");
+		printf("%ld %d %s\n", timestamp, args->died_philo, "died");
 }
 
 void	print_state(t_philo *philo, const char *state)
@@ -54,10 +56,8 @@ void	print_state(t_philo *philo, const char *state)
 	int		timestamp;
 
 	pos = 0;
-	pthread_mutex_lock(&philo->args->simulation_mutex);
-	if (!philo->args->simulation_finished)
+	if (!(philo->args->simulation_finished))
 	{
-		pthread_mutex_unlock(&philo->args->simulation_mutex);
 		pthread_mutex_lock(&philo->args->print_mutex);
 		timestamp = get_current_time() - philo->args->start_time;
 		pos += ft_itoa(timestamp, buffer + pos);
@@ -71,6 +71,4 @@ void	print_state(t_philo *philo, const char *state)
 		write(STDOUT_FILENO, buffer, pos);
 		pthread_mutex_unlock(&philo->args->print_mutex);
 	}
-	else
-		pthread_mutex_unlock(&philo->args->simulation_mutex);
 }

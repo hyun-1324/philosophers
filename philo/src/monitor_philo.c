@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:23:24 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/06 00:15:50 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/06 01:16:43 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	*handle_single_philo(void *ptr)
 	print_state(philo, "is thinking");
 	pthread_mutex_lock(philo->left_fork);
 	print_state(philo, "has taken a fork");
-	sleep_time(philo->args, philo->args->time_to_die);
+	sleep_until(philo->args, philo->args->time_to_die);
 	pthread_mutex_unlock(philo->left_fork);
 	return (NULL);
 }

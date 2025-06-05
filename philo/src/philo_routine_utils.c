@@ -6,32 +6,32 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 13:23:29 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/06 00:05:50 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/06 01:16:18 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	sleep_time(t_args *args, long sleep_time)
+void	sleep_until(t_args *args, long target_time_ms)
 {
-	long	current_time;
-	long	time_to_wait;
-	long	sleep_chunk;
+	long	current_time_ms;
+	long	time_to_wait_us;
+	long	sleep_interval_us;
 
-	current_time = get_current_time();
-	while (current_time < sleep_time)
+	current_time_ms = get_current_time();
+	while (current_time_ms < target_time_ms)
 	{
 		if (args->simulation_finished)
 			break ;
-		time_to_wait = (sleep_time - current_time) * 1000;
-		if (time_to_wait <= 0)
+		time_to_wait_us = (target_time_ms - current_time_ms) * 1000;
+		if (time_to_wait_us <= 0)
 			break ;
-		if (time_to_wait > 250)
-			sleep_chunk = 250;
+		if (time_to_wait_us > 250)
+			sleep_interval_us = 250;
 		else
-			sleep_chunk = time_to_wait;
-		usleep(sleep_chunk);
-		current_time = get_current_time();
+			sleep_interval_us = time_to_wait_us;
+		usleep(sleep_interval_us);
+		current_time_ms = get_current_time();
 	}
 }
 
@@ -50,7 +50,7 @@ void	eat(t_philo *philo)
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->meal_mutex);
 	print_state(philo, "is eating");
-	sleep_time(philo->args, get_current_time() + philo->args->time_to_eat);
+	sleep_until(philo->args, get_current_time() + philo->args->time_to_eat);
 }
 
 void	put_forks(t_philo *philo)
@@ -62,5 +62,5 @@ void	put_forks(t_philo *philo)
 void	sleep_philo(t_philo *philo)
 {
 	print_state(philo, "is sleeping");
-	sleep_time(philo->args, get_current_time() + philo->args->time_to_sleep);
+	sleep_until(philo->args, get_current_time() + philo->args->time_to_sleep);
 }

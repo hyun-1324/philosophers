@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 12:09:26 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/05 23:39:44 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/06 01:26:17 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	print_state(t_philo *philo, const char *state)
 	int		timestamp;
 
 	pos = 0;
-	if (!(philo->args->simulation_finished))
+	if (!philo->args->simulation_finished)
 	{
 		pthread_mutex_lock(&philo->args->print_mutex);
 		timestamp = get_current_time() - philo->args->start_time;

@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 10:37:29 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/06 00:17:08 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/06 01:24:42 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	eat(t_philo *philo);
 void	put_forks(t_philo *philo);
 void	sleep_philo(t_philo *philo);
 void	*philo_routine(void *ptr);
+void	*handle_single_philo(void *ptr);
 
 // ─────────────────────────────────────────────────────────────
 // Utility functions
@@ -69,9 +70,8 @@ long	ft_atoi(const char *str);
 void	is_str_valid_number(int argc, char **argv);
 void	check_overflow_and_save_arg(t_args *arg, \
 	int argc, char **argv, long tmp);
-void	sleep_time(t_args *args, long sleep_time);
+void	sleep_until(t_args *args, long target_time_ms);
 int		finish_if_all_eaten(t_philo *philos, t_args *arg);
-void	*handle_single_philo(void *ptr);
 
 // ─────────────────────────────────────────────────────────────
 // Output & Error handling

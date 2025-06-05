@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:18:45 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/06 00:15:58 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/06 01:15:47 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,10 @@ static void	handle_odd_number_philos(t_philo *philo)
 	while (!philo->args->simulation_finished)
 	{
 		print_state(philo, "is thinking");
-		if (get_current_time() - philo->last_meal_time \
-	> philo->args->time_to_sleep \
-	&& philo->args->time_to_eat < philo->args->time_to_sleep)
-			usleep(750);
-		else if (get_current_time() - philo->last_meal_time \
-	> philo->args->time_to_sleep)
-			sleep_time(philo->args, \
+		if (philo->args->time_to_eat < philo->args->time_to_sleep)
+			usleep(250);
+		else
+			sleep_until(philo->args, \
 	get_current_time() - 2 + philo->args->time_to_eat);
 		take_forks(philo);
 		eat(philo);

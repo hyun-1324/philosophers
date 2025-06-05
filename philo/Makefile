@@ -1,7 +1,7 @@
 NAME = philo
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 RM = rm -f
 INCLUDE = -Iinclude
 
@@ -11,6 +11,7 @@ OBJS_PATH = ./obj
 SRCS	= $(SRCS_PATH)/manage_resources.c\
 		  $(SRCS_PATH)/monitor_philo.c \
 		  $(SRCS_PATH)/philo_routine.c \
+		  $(SRCS_PATH)/philo_routine_utils.c \
 		  $(SRCS_PATH)/print_state.c \
 		  $(SRCS_PATH)/utils.c \
 		  $(SRCS_PATH)/main.c \

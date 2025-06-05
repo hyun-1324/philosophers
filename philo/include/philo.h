@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 10:37:29 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/04 10:33:47 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/05 16:52:48 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_args
 	int				number_must_eat;
 	int				start_time;
 	int				dead_philo;
+	int				all_eaten;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	simulation_mutex;
@@ -54,6 +55,10 @@ typedef struct s_philo
 // ─────────────────────────────────────────────────────────────
 // Thread routines
 // ─────────────────────────────────────────────────────────────
+void	take_forks(t_philo *philo, int philo_id);
+void	eat(t_philo *philo);
+void	put_forks(t_philo *philo);
+void	sleep_philo(t_philo *philo);
 void	*philo_routine(void *ptr);
 
 // ─────────────────────────────────────────────────────────────

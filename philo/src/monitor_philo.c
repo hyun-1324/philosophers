@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:23:24 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/03 14:46:40 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/05 11:51:52 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	finish_if_all_eaten(t_philo *philos, t_args *args)
 	pthread_mutex_lock(&args->simulation_mutex);
 	args->simulation_finished = 1;
 	pthread_mutex_unlock(&args->simulation_mutex);
+	args->all_eaten = 1;
 	return (1);
 }
 

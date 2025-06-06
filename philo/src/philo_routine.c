@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:18:45 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/06 01:15:47 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/06 12:28:01 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	handle_odd_number_philos(t_philo *philo)
 			usleep(250);
 		else
 			sleep_until(philo->args, \
-	get_current_time() - 2 + philo->args->time_to_eat);
+get_current_time() - 2 + philo->args->time_to_eat);
 		take_forks(philo);
 		eat(philo);
 		put_forks(philo);

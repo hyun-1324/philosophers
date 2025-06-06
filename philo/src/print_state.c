@@ -6,11 +6,16 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 12:09:26 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/06 01:26:17 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/06 20:43:27 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	print_error(char *error_message)
+{
+	printf("%s\n", error_message);
+}
 
 static int	ft_itoa(int n, char *buf)
 {

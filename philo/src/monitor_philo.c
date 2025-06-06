@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:23:24 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/06 01:16:43 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/06 20:53:57 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	finish_if_all_eaten(t_philo *philos, t_args *args)
 	int	meals_to_eat;
 
 	i = 0;
-	while (i < args->num_of_philo)
+	while (i < args->philo_num)
 	{
 		pthread_mutex_lock(&philos[i].meal_mutex);
 		meals_to_eat = args->number_must_eat - philos[i].meals_eaten;

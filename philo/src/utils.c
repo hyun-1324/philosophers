@@ -6,16 +6,11 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:06:31 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/06 15:16:02 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/06 20:54:25 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	print_error(char *error_message)
-{
-	printf("%s\n", error_message);
-}
 
 long	get_current_time(void)
 {
@@ -67,12 +62,12 @@ int	is_str_valid_number(int argc, char **argv)
 		{
 			j++;
 			if (argv[i][j] == '\0')
-			return (print_error("invalid argument"), 0);
+				return (print_error("invalid argument"), 0);
 		}
 		while (argv[i][j])
 		{
 			if (argv[i][j] < '0' || argv[i][j] > '9')
-			return (print_error("invalid argument"), 0);
+				return (print_error("invalid argument"), 0);
 			j++;
 		}
 		i++;
@@ -80,13 +75,13 @@ int	is_str_valid_number(int argc, char **argv)
 	return (1);
 }
 
-int	check_overflow_and_save_arg(t_args *args, \
+int	check_overflow_and_save_args(t_args *args, \
 int argc, char **argv, long tmp)
 {
 	tmp = ft_atoi(argv[1]);
 	if (tmp <= 0 || tmp > INT_MAX)
 		return (print_error("invalid number_of_philos"), 0);
-	args->num_of_philo = (int)tmp;
+	args->philo_num = (int)tmp;
 	tmp = ft_atoi(argv[2]);
 	if (tmp <= 0 || tmp > INT_MAX)
 		return (print_error("invalid time_to_die"), 0);

@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:18:45 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/06 12:28:01 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/06 20:54:14 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	*philo_routine(void *ptr)
 	t_philo	*philo;
 
 	philo = (t_philo *)ptr;
-	if (philo->args->num_of_philo % 2 == 0)
+	if (philo->args->philo_num % 2 == 0)
 		handle_even_number_philos(philo);
 	else
 		handle_odd_number_philos(philo);

@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 10:37:29 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/06 15:24:06 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/06 20:53:36 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 // Shared configuration and simulation state
 typedef struct s_args
 {
-	int				num_of_philo;
+	int				philo_num;
 	long			start_time;
 	long			time_to_die;
 	int				time_to_eat;
@@ -68,7 +68,7 @@ void	*handle_single_philo(void *ptr);
 long	get_current_time(void);
 long	ft_atoi(const char *str);
 int		is_str_valid_number(int argc, char **argv);
-int		check_overflow_and_save_arg(t_args *arg, \
+int		check_overflow_and_save_args(t_args *arg, \
 int argc, char **argv, long tmp);
 void	sleep_until(t_args *args, long target_time_ms);
 int		finish_if_all_eaten(t_philo *philos, t_args *arg);
@@ -83,9 +83,12 @@ void	print_error(char *error_message);
 // ─────────────────────────────────────────────────────────────
 // Cleanup & Resource management
 // ─────────────────────────────────────────────────────────────
-void	cleanup_on_create_failure(t_args *arg, \
-t_philo *philo, int created_threads);
-void	cleanup_resources(t_args *arg, t_philo *philo);
-void	cleanup_on_mutex_init_failure();
+void	destroy_fork_mutexes(t_args *args, int fork_count);
+void	cleanup_on_philo_failure(t_args *args);
+void	cleanup_on_meal_failure(t_args *args, t_philo *philo, \
+int meal_count);
+void	cleanup_on_thread_failure(t_args *args, t_philo *philo, \
+int thread_count);
+void	cleanup_resources(t_args *args, t_philo *philo);
 
 #endif

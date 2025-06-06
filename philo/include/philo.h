@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 10:37:29 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/06 12:27:28 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/06 15:24:06 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void	*handle_single_philo(void *ptr);
 // ─────────────────────────────────────────────────────────────
 long	get_current_time(void);
 long	ft_atoi(const char *str);
-void	is_str_valid_number(int argc, char **argv);
-void	check_overflow_and_save_arg(t_args *arg, \
+int		is_str_valid_number(int argc, char **argv);
+int		check_overflow_and_save_arg(t_args *arg, \
 int argc, char **argv, long tmp);
 void	sleep_until(t_args *args, long target_time_ms);
 int		finish_if_all_eaten(t_philo *philos, t_args *arg);
@@ -78,7 +78,7 @@ int		finish_if_all_eaten(t_philo *philos, t_args *arg);
 // ─────────────────────────────────────────────────────────────
 void	print_state(t_philo *philo, const char *state);
 void	print_died_philo(t_args *args);
-void	exit_with_error(char *error_message);
+void	print_error(char *error_message);
 
 // ─────────────────────────────────────────────────────────────
 // Cleanup & Resource management
@@ -86,5 +86,6 @@ void	exit_with_error(char *error_message);
 void	cleanup_on_create_failure(t_args *arg, \
 t_philo *philo, int created_threads);
 void	cleanup_resources(t_args *arg, t_philo *philo);
+void	cleanup_on_mutex_init_failure();
 
 #endif

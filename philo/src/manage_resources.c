@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:15:32 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/06 00:15:19 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/06 16:19:35 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,16 @@ int created_threads)
 	free(philo);
 }
 
+void	cleanup_mutex_fork(t_args *args, int created_forks_num)
+{
+	int	i;
+
+	i = 0;
+	while (i < created_forks_num - 1)
+		pthread_mutex_destory(&args->forks[i]);
+}
+
+void	cleanup_malloc_failure
 void	cleanup_resources(t_args *args, t_philo *philo)
 {
 	int	i;

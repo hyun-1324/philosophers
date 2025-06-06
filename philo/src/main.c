@@ -6,13 +6,13 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:06:28 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/06 12:27:45 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/06 16:18:53 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	init_args(t_args *args, int argc, char **argv)
+static int	init_args(t_args *args, int argc, char **argv)
 {
 	int	i;
 
@@ -20,21 +20,33 @@ static void	init_args(t_args *args, int argc, char **argv)
 	check_overflow_and_save_arg(args, argc, argv, 0);
 	args->forks = malloc(sizeof(pthread_mutex_t) * args->num_of_philo);
 	if (!args->forks)
-		exit_with_error("failed memory allocation for forks");
+		return (print_error("failed memory allocation for forks"), 0);
 	i = 0;
 	while (i < args->num_of_philo)
-		pthread_mutex_init(&args->forks[i++], NULL);
-	pthread_mutex_init(&args->print_mutex, NULL);
+	{
+		if (pthread_mutex_init(&args->forks[i++], NULL))
+		{
+			cleanup_mutex_fork(args, i - 1);
+			free(args->forks);
+			return (0);
+		}
+	}
+	if (pthread_mutex_init(&args->print_mutex, NULL))
+	{
+		cleanup_mutex_fork(args, i);
+		free(args->forks);
+		return (0);
+	}
+	return (1);
 }
 
-static void	init_philo(t_philo **philo, t_args *args)
+static int	init_philo(t_philo **philo, t_args *args)
 {
 	int	i;
 
 	*philo = malloc(sizeof(t_philo) * args->num_of_philo);
 	if (!*philo)
-		return (free(args->forks), \
-exit_with_error("failed memory allocation for philo"));
+		return (free(args->forks), print_error("failed memory allocation for philo"), 0);
 	i = 0;
 	while (i < args->num_of_philo)
 	{
@@ -52,11 +64,13 @@ exit_with_error("failed memory allocation for philo"));
 			(*philo)[i].right_fork = &args->forks[(i + 1) % args->num_of_philo];
 			(*philo)[i].left_fork = &args->forks[i];
 		}
-		pthread_mutex_init(&(*philo)[i++].meal_mutex, NULL);
+		if (pthread_mutex_init(&(*philo)[i++].meal_mutex, NULL))
+			return (cleanup_on_mutex_init_failure(), 0);
 	}
+	return (1);
 }
 
-static void	start_philo(t_args *args, t_philo *philo, int i)
+static int	start_philo(t_args *args, t_philo *philo, int i)
 {
 	args->start_time = get_current_time();
 	i = 0;
@@ -66,7 +80,8 @@ static void	start_philo(t_args *args, t_philo *philo, int i)
 handle_single_philo, &philo[i])) != 0)
 		{
 			cleanup_on_create_failure(args, philo, i);
-			exit_with_error("failed to create philo thread");
+			print_error("failed to create philo thread");
+			return (0);
 		}
 	}
 	else
@@ -77,11 +92,13 @@ handle_single_philo, &philo[i])) != 0)
 philo_routine, &philo[i])) != 0)
 			{
 				cleanup_on_create_failure(args, philo, i);
-				exit_with_error("failed to create philo thread");
+				print_error("failed to create philo thread");
+				return (0);
 			}
 			i++;
 		}
 	}
+	return (1);
 }
 
 static void	monitor_philo(t_philo *philo, t_args *args)
@@ -118,16 +135,19 @@ int	main(int argc, char **argv)
 	int		i;
 
 	if (argc != 5 && argc != 6)
-		exit_with_error("invalid argument number");
+		return (print_error("invalid argument number"), EXIT_FAILURE);
 	memset(&args, 0, sizeof(t_args));
-	init_args(&args, argc, argv);
-	init_philo(&philo, &args);
-	start_philo(&args, philo, 0);
+	if (!init_args(&args, argc, argv))
+		return (EXIT_FAILURE);
+	if (!init_philo(&philo, &args))
+		return (EXIT_FAILURE);
+	if (!start_philo(&args, philo, 0))
+		return (EXIT_FAILURE);
 	monitor_philo(philo, &args);
 	print_died_philo(&args);
 	i = 0;
 	while (i < args.num_of_philo)
 		pthread_join(philo[i++].thread, NULL);
 	cleanup_resources(&args, philo);
-	return (0);
+	return (EXIT_SUCCESS);
 }

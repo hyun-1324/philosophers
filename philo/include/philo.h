@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 10:37:29 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/06 20:53:36 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/08 19:25:49 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,10 @@ void	print_error(char *error_message);
 // ─────────────────────────────────────────────────────────────
 void	destroy_fork_mutexes(t_args *args, int fork_count);
 void	cleanup_on_philo_failure(t_args *args);
-void	cleanup_on_meal_failure(t_args *args, t_philo *philo, \
+void	cleanup_on_meal_failure(t_args *args, t_philo *philos, \
 int meal_count);
-void	cleanup_on_thread_failure(t_args *args, t_philo *philo, \
+void	cleanup_on_thread_failure(t_args *args, t_philo *philos, \
 int thread_count);
-void	cleanup_resources(t_args *args, t_philo *philo);
+void	cleanup_resources(t_args *args, t_philo *philos);
 
 #endif

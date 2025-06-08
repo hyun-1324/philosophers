@@ -6,7 +6,7 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:06:28 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/06 21:25:27 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/08 19:23:52 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ int	main(int argc, char **argv)
 {
 	t_args	args;
 	t_philo	*philos;
-	int		i;
 
 	if (argc != 5 && argc != 6)
 		return (print_error("invalid argument number"), EXIT_FAILURE);
@@ -141,9 +140,6 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	monitor_philo(philos, &args);
 	print_died_philo(&args);
-	i = 0;
-	while (i < args.philo_num)
-		pthread_join(philos[i++].thread, NULL);
 	cleanup_resources(&args, philos);
 	return (EXIT_SUCCESS);
 }

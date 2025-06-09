@@ -6,11 +6,21 @@
 /*   By: donheo <donheo@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 20:18:45 by donheo            #+#    #+#             */
-/*   Updated: 2025/06/09 18:54:35 by donheo           ###   ########.fr       */
+/*   Updated: 2025/06/09 19:05:43 by donheo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static long	get_last_meal_time(t_philo *philo)
+{
+	long	last_meal_record;
+
+	pthread_mutex_lock(&philo->meal_mutex);
+	last_meal_record = philo->last_meal_time;
+	pthread_mutex_unlock(&philo->meal_mutex);
+	return (last_meal_record);
+}
 
 static void	handle_even_number_philos(t_philo *philo)
 {
@@ -31,7 +41,9 @@ static void	handle_odd_number_philos(t_philo *philo)
 	while (!philo->args->simulation_finished)
 	{
 		print_state(philo, "is thinking");
-		if (get_current_time() - philo->last_meal_time > 50)
+		if (philo->args->time_to_eat < philo->args->time_to_sleep)
+			usleep(250);
+		else if (get_current_time() - get_last_meal_time(philo) > 50)
 			sleep_until(philo->args, \
 get_current_time() - 2 + philo->args->time_to_eat);
 		take_forks(philo);

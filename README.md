@@ -1,4 +1,4 @@
-# 🧠 Philosophers - Dining Philosophers Problem
+# 🧐 Philosophers - Dining Philosophers Problem
 
 This project is part of the 42 curriculum. It implements a multithreaded simulation of the classic Dining Philosophers problem. The goal is to prevent philosophers from starving while optimizing resource usage at the thread level.
 
@@ -27,32 +27,33 @@ make
 
 ### Arguments
 
-| Argument                                  | Description                                                                 |
-|------------------------------------------|-----------------------------------------------------------------------------|
-| `number_of_philosophers`                 | Number of philosophers (and forks); must be ≥ 1                             |
-| `time_to_die` (in ms)                    | Time a philosopher can go without eating before dying                      |
-| `time_to_eat` (in ms)                    | Time it takes for a philosopher to eat *(recommended minimum: 60ms)*       |
-| `time_to_sleep` (in ms)                  | Time a philosopher spends sleeping *(recommended minimum: 60ms)*           |
-| `number_of_times_each_philosopher_must_eat` *(optional)* | If specified, simulation ends when all philosophers have eaten this many times |
+| Argument                                                 | Description                                                                    |
+| -------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `number_of_philosophers`                                 | Number of philosophers (and forks); must be ≥ 1                                |
+| `time_to_die` (in ms)                                    | Time a philosopher can go without eating before dying                          |
+| `time_to_eat` (in ms)                                    | Time it takes for a philosopher to eat _(recommended minimum: 60ms)_           |
+| `time_to_sleep` (in ms)                                  | Time a philosopher spends sleeping _(recommended minimum: 60ms)_               |
+| `number_of_times_each_philosopher_must_eat` _(optional)_ | If specified, simulation ends when all philosophers have eaten this many times |
 
-### 💡 Notes
+### Notes
 
 - For a stable simulation, `time_to_die` must be sufficiently larger than `time_to_eat` and `time_to_sleep`.
-    - For even numbers of philosophers, `time_to_die` should be at least **2 × time_to_eat + α**.
-    - For odd numbers of philosophers, `time_to_die` should be at least **3 × time_to_eat + α**.
-    - In general, `time_to_die` must be **greater than (time_to_eat + time_to_sleep + α)** to avoid starvation due to system scheduling delays.
+  - For even numbers of philosophers, `time_to_die` should be at least **2 × time_to_eat + α**.
+  - For odd numbers of philosophers, `time_to_die` should be at least **3 × time_to_eat + α**.
+  - In general, `time_to_die` must be **greater than (time_to_eat + time_to_sleep + α)** to avoid starvation due to system scheduling delays.
 - Once the simulation starts, philosophers begin eating in parallel threads.
 - The program is designed to prevent philosophers from dying due to starvation.
 - With high philosopher counts (e.g. 200+), system performance may cause timing issues.
 - All output is timestamped and shows philosopher actions clearly (e.g., taking a fork, eating, sleeping, etc.)
 
-### 🧪 Example
+### Example
 
 ```bash
 ./philo 5 800 200 200
 ```
 
 This starts a simulation with:
+
 - 5 philosophers
 - 800ms time to die
 - 200ms time to eat
